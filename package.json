@@ -1,0 +1,28 @@
+{
+  "name": "CordovaPluginWatchConnectivity",
+  "version": "1.1.1",
+  "description": "",
+  "cordova": {
+    "id": "",
+    "platforms": [
+      "ios"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gecsbernat/cordova-plugin-watchconnectivity"
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-ios",
+    "cordova-android"
+  ],
+  "engines": [
+    {
+      "name": "cordova",
+      "version": ">=3.5.0"
+    }
+  ],
+  "author": "",
+  "license": "MIT"
+}
