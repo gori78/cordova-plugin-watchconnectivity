@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gecsbernat/cordova-plugin-watchconnectivity"
+    "url": "git+https://github.com/gori78/cordova-plugin-watchconnectivity"
   },
   "keywords": [
     "ecosystem:cordova",
