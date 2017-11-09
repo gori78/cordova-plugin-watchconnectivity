@@ -24,11 +24,9 @@
 }
 
 - (void)session:(WCSession *)session didReceiveMessage:(NSDictionary<NSString *, id> *)message replyHandler:(void(^)(NSDictionary<NSString *, id> *replyMessage))replyHandler {
-    // goral
     NSError *err;
     CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:[[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:message options:0 error:&err] encoding:NSUTF8StringEncoding]];
     [self.commandDelegate sendPluginResult:pluginResult callbackId:self.messageReceiver];
-    // end goral
     dispatch_async(dispatch_get_main_queue(), ^{
         replyHandler([[NSDictionary alloc] initWithObjects:@[self.messageString?self.messageString:@""] forKeys:@[@"message"]]);
     });
@@ -39,13 +37,6 @@
         self.messageString = message;
     }
     NSDictionary *messageDictionary = [[NSDictionary alloc] initWithObjects:@[message] forKeys:@[@"message"]];
-    /* [[WCSession defaultSession] sendMessage:messageDictionary
-     replyHandler:^(NSDictionary *reply) {}
-     errorHandler:^(NSError *error) {}
-     ]; */
-    /*[[WCSession defaultSession] updateApplicationContext:messageDictionary
-     error:nil
-     ];*/
     [[WCSession defaultSession] transferUserInfo:messageDictionary];
 }
 
