@@ -56,4 +56,30 @@
     
 }
 
+// receive file from watch
+-(void)session:(WCSession *)session didReceiveFile:(WCSessionFile *)file {
+    NSLog(@"received file: %@",file.fileURL);
+    NSError *err;
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    NSString *cacheDir = [[NSHomeDirectory() stringByAppendingPathComponent:@"Library"] stringByAppendingPathComponent:@"Caches"];
+    NSString *theFileName = [file.fileURL lastPathComponent];
+    NSURL *cacheDirURL = [NSURL fileURLWithPath:[cacheDir stringByAppendingPathComponent:theFileName]];
+    
+    if ([fileManager moveItemAtURL: file.fileURL toURL:cacheDirURL error: &err]) {
+        //Store reference to the new URL or do whatever you'd like to do with the file
+        //NSData *data = [NSData dataWithContentsOfURL:cacheDirURL];
+
+        // send message file received with messageDirectory
+        NSDictionary *messageDictionary = [[NSDictionary alloc] initWithObjects:@[cacheDirURL.absoluteString] forKeys:@[@"message"]];
+        
+        CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:[[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:messageDictionary options:0 error:&err] encoding:NSUTF8StringEncoding]];
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:self.messageReceiver];
+        
+    }
+    else {
+        NSLog(@"didReceiveFile with Error %@ ", err);
+    }
+}
+
 @end
